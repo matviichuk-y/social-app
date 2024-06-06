@@ -1,6 +1,8 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+
 import { useForm } from "react-hook-form"
+import { useToast } from "@/components/ui/use-toast"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,13 +14,15 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import Loader from "@/components/shared/Loader"
 import { SignUpValidation } from "@/lib/validation"
 import { Link } from "react-router-dom"
+import { createUserAccount } from "@/lib/appwrite/api"
+import Loader from "@/components/shared/Loader"
 
 
 const SignUpForm = () => {
   const isLoading = false;
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof SignUpValidation>>({
     resolver: zodResolver(SignUpValidation),
@@ -30,8 +34,14 @@ const SignUpForm = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof SignUpValidation>) {
+    const newUser = await createUserAccount(values);
+
+    if (!newUser) {
+      return toast({ title: 'Something went wrong. Please try again.' })
+    }
+
+    // const session = await signInAccount()
   }
 
   return (

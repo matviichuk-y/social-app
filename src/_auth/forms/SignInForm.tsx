@@ -1,9 +1,12 @@
-import * as z  from "zod"
+import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+
+import { Link, useNavigate } from "react-router-dom"
 
 import { useForm } from "react-hook-form"
 import { useToast } from "@/components/ui/use-toast"
-
+import { useUserContext } from "@/context/AuthContext"
+import { useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 
 import {
   Form,
@@ -15,14 +18,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-
-import { Link, useNavigate } from "react-router-dom"
 import Loader from "@/components/shared/Loader"
-import { useUserContext } from "@/context/AuthContext"
-import { useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 
 import { SignInValidation } from "@/lib/validation"
-
 
 const SignInForm = () => {
   const { toast } = useToast();
@@ -58,7 +56,7 @@ const SignInForm = () => {
 
       navigate('/')
     } else {
-      return toast({title: 'Sign up failed. Please try again.'})
+      return toast({ title: 'Sign up failed. Please try again.' })
     }
   }
 

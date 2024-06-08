@@ -1,8 +1,12 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
+import { Link, useNavigate } from "react-router-dom"
+
 import { useForm } from "react-hook-form"
 import { useToast } from "@/components/ui/use-toast"
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
 import {
   Form,
@@ -15,11 +19,8 @@ import {
   import { Input } from "@/components/ui/input"
   import { Button } from "@/components/ui/button"
   import Loader from "@/components/shared/Loader"
-import { SignUpValidation } from "@/lib/validation"
-import { Link, useNavigate } from "react-router-dom"
-import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
-import { useUserContext } from "@/context/AuthContext"
 
+import { SignUpValidation } from "@/lib/validation"
 
 const SignUpForm = () => {
   const { toast } = useToast();
